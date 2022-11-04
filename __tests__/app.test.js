@@ -31,10 +31,6 @@ describe('plants routes', () => {
     };
     expect(res.body).toEqual(birchForest);
   });
-
-  afterAll(() => {
-    pool.end();
-  });
 });
 
 describe('climbing town routes', () => {
@@ -48,4 +44,8 @@ describe('climbing town routes', () => {
     });
     expect(res.body).toEqual(expected);
   });
+});
+
+afterAll(() => {
+  pool.end();
 });
