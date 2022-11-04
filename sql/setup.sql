@@ -25,13 +25,13 @@ CREATE TABLE climbing_towns (
     id BIGINT GENERATED ALWAYS AS IDENTITY,
     name VARCHAR NOT NULL,
     nearest_climbing_destination VARCHAR NOT NULL,
-    climb_months VARCHAR NOT NULL,
+    climb_months INT NOT NULL,
     population INT NOT NULL
 );
 
 INSERT INTO climbing_towns (name, nearest_climbing_destination, climb_months, population)
 VALUES
-('Redmond Oregon', 'Smith Rock State Park', 12, 35000 ),
+('Redmond Oregon', 'Smith Rock State Park', 12, 35000),
 ('Index Washington', 'Index', 7, 156),
 ('St George Utah', 'Snow Canyon', 7, 99958 );
 
