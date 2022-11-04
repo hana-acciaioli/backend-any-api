@@ -44,6 +44,18 @@ describe('climbing town routes', () => {
     });
     expect(res.body).toEqual(expected);
   });
+
+  it('/towns/:id should return town detail', async () => {
+    const res = await request(app).get('/towns/1');
+    const redmond = {
+      id: '1',
+      name: 'Redmond Oregon',
+      nearestClimbingDestination: 'Smith Rock State Park',
+      climbMonths: 12,
+      population: 35000,
+    };
+    expect(res.body).toEqual(redmond);
+  });
 });
 
 afterAll(() => {
