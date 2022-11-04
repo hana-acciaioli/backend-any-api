@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 const { plants } = require('../lib/plants-data.js');
+const { towns } = require('../lib/climbing-towns-data.js');
 
 describe('plants routes', () => {
   beforeEach(() => {
@@ -33,5 +34,18 @@ describe('plants routes', () => {
 
   afterAll(() => {
     pool.end();
+  });
+});
+
+describe('climbing town routes', () => {
+  beforeEach(() => {
+    return setup(pool);
+  });
+  it('/towns should return a list of towns with id', async () => {
+    const res = await request(app).get('/towns');
+    const expected = towns.map((town) => {
+      return { id: town.id, name: town.name };
+    });
+    expect(res.body).toEqual(expected);
   });
 });
