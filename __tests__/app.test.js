@@ -22,11 +22,11 @@ describe('plants routes', () => {
     const res = await request(app).get('/plants/1');
     const birchForest = {
       id: '1',
-      biome_name: 'BIRCH_FOREST',
+      biomeName: 'BIRCH_FOREST',
       material: 'LONG_GRASS:1',
-      base_material: 'GRASS',
-      scan_for_material: 'LONG_GRASS:1',
-      plant_density: 0.03,
+      baseMaterial: 'GRASS',
+      scanForMaterial: 'LONG_GRASS:1',
+      plantDensity: 0.03,
     };
     expect(res.body).toEqual(birchForest);
   });
