@@ -1,16 +1,63 @@
 const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
-// const request = require('supertest');
-// const app = require('../lib/app');
+const request = require('supertest');
+const app = require('../lib/app');
 
-describe('backend-express-template routes', () => {
+const { plants } = require('../lib/plants-data.js');
+const { towns } = require('../lib/climbing-towns-data.js');
+
+describe('plants routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
-  it('example test - delete me!', () => {
-    expect(1).toEqual(1);
+
+  it('/plants should return a list of plant botany', async () => {
+    const res = await request(app).get('/plants');
+    const expected = plants.map((plant) => {
+      return { id: plant.id, biomeName: plant.biome_name };
+    });
+    expect(res.body).toEqual(expected);
   });
-  afterAll(() => {
-    pool.end();
+
+  it('/plants/:id should return plant biome detail', async () => {
+    const res = await request(app).get('/plants/1');
+    const birchForest = {
+      id: '1',
+      biomeName: 'BIRCH_FOREST',
+      material: 'LONG_GRASS:1',
+      baseMaterial: 'GRASS',
+      scanForMaterial: 'LONG_GRASS:1',
+      plantDensity: 0.03,
+    };
+    expect(res.body).toEqual(birchForest);
   });
+});
+
+describe('climbing town routes', () => {
+  beforeEach(() => {
+    return setup(pool);
+  });
+  it('/towns should return a list of towns with id', async () => {
+    const res = await request(app).get('/towns');
+    const expected = towns.map((town) => {
+      return { id: town.id, name: town.name };
+    });
+    expect(res.body).toEqual(expected);
+  });
+
+  it('/towns/:id should return town detail', async () => {
+    const res = await request(app).get('/towns/1');
+    const redmond = {
+      id: '1',
+      name: 'Redmond Oregon',
+      nearestClimbingDestination: 'Smith Rock State Park',
+      climbMonths: 12,
+      population: 35000,
+    };
+    expect(res.body).toEqual(redmond);
+  });
+});
+
+afterAll(() => {
+  pool.end();
 });
